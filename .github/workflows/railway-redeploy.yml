@@ -1,23 +1,17 @@
 name: railway-redeploy
-
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Install Railway CLI
-        run: |
-          npm install -g @railway/cli
-
+        run: npm install -g @railway/cli
       - name: Deploy to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
@@ -25,7 +19,7 @@ jobs:
           RAILWAY_ENVIRONMENT_ID: ${{ secrets.RAILWAY_ENVIRONMENT_ID }}
           RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
         run: |
-          railway login "$RAILWAY_TOKEN"
+          railway login
           railway up --ci --detach \
             --project "$RAILWAY_PROJECT_ID" \
             --environment "$RAILWAY_ENVIRONMENT_ID" \
