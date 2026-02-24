@@ -147,7 +147,7 @@ describe('filterFilesByEndpointConfig', () => {
           fileConfig: {
             endpoints: {
               [Providers.OPENAI]: {
-                fileSizeLimit: 10,
+                fileSizeLimit: 200,
               },
             },
           },
