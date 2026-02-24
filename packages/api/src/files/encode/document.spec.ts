@@ -86,9 +86,9 @@ describe('encodeAndFormatDocuments - fileConfig integration', () => {
 
   describe('Configuration extraction and validation', () => {
     it('should pass configured file size limit to validatePdf for OpenAI', async () => {
-      const configuredLimit = mbToBytes(15);
-      const req = createMockRequest(15) as ServerRequest;
-      const file = createMockFile(10);
+      const configuredLimit = mbToBytes(200);
+      const req = createMockRequest(200) as ServerRequest;
+      const file = createMockFile(200);
 
       const mockContent = Buffer.from('test-pdf-content').toString('base64');
       mockedGetFileStream.mockResolvedValue({
@@ -296,8 +296,8 @@ describe('encodeAndFormatDocuments - fileConfig integration', () => {
 
   describe('Validation failure handling', () => {
     it('should throw error when validation fails', async () => {
-      const req = createMockRequest(10) as ServerRequest;
-      const file = createMockFile(12);
+      const req = createMockRequest(200) as ServerRequest;
+      const file = createMockFile(150);
 
       const mockContent = Buffer.from('test-pdf-content').toString('base64');
       mockedGetFileStream.mockResolvedValue({
@@ -382,7 +382,7 @@ describe('encodeAndFormatDocuments - fileConfig integration', () => {
         expect.any(Buffer),
         expect.any(Number),
         Providers.OPENAI,
-        mbToBytes(5),
+        mbToBytes(150),
       );
     });
 
@@ -416,7 +416,7 @@ describe('encodeAndFormatDocuments - fileConfig integration', () => {
         expect.any(Buffer),
         expect.any(Number),
         Providers.OPENAI,
-        mbToBytes(50),
+        mbToBytes(200),
       );
     });
 
@@ -455,14 +455,14 @@ describe('encodeAndFormatDocuments - fileConfig integration', () => {
         expect.any(Buffer),
         expect.any(Number),
         Providers.OPENAI,
-        mbToBytes(10),
+        mbToBytes(200),
       );
       expect(mockedValidatePdf).toHaveBeenNthCalledWith(
         2,
         expect.any(Buffer),
         expect.any(Number),
         Providers.OPENAI,
-        mbToBytes(10),
+        mbToBytes(200),
       );
     });
   });
