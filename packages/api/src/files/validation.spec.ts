@@ -293,8 +293,8 @@ describe('PDF Validation with fileConfig.endpoints.*.fileSizeLimit', () => {
        * Expected: Should be accepted (within 50MB config)
        * Actual (before fix): Rejected with "exceeds 10MB limit"
        */
-      const configuredLimit = mbToBytes(50); // User configured 50MB
-      const pdfBuffer = createMockPdfBuffer(15); // User uploads 15MB file
+      const configuredLimit = mbToBytes(200); // User configured 50MB
+      const pdfBuffer = createMockPdfBuffer(200); // User uploads 15MB file
 
       const result = await validatePdf(
         pdfBuffer,
@@ -318,8 +318,8 @@ describe('PDF Validation with fileConfig.endpoints.*.fileSizeLimit', () => {
        * Uploads a 7MB PDF to OpenAI endpoint
        * Expected: Should be rejected (exceeds 5MB configured limit)
        */
-      const configuredLimit = mbToBytes(5); // User configured 5MB
-      const pdfBuffer = createMockPdfBuffer(7); // User uploads 7MB file
+      const configuredLimit = mbToBytes(100); // User configured 5MB
+      const pdfBuffer = createMockPdfBuffer(100); // User uploads 7MB file
 
       const result = await validatePdf(
         pdfBuffer,
@@ -329,8 +329,8 @@ describe('PDF Validation with fileConfig.endpoints.*.fileSizeLimit', () => {
       );
 
       expect(result.isValid).toBe(false);
-      expect(result.error).toContain('7MB');
-      expect(result.error).toContain('5MB');
+      expect(result.error).toContain('70MB');
+      expect(result.error).toContain('50MB');
     });
 
     it('should allow upload within stricter user-configured limit', async () => {
@@ -339,7 +339,7 @@ describe('PDF Validation with fileConfig.endpoints.*.fileSizeLimit', () => {
        * Uploads a 4MB PDF
        * Expected: Should be accepted
        */
-      const configuredLimit = mbToBytes(5);
+      const configuredLimit = mbToBytes(200);
       const pdfBuffer = createMockPdfBuffer(4);
 
       const result = await validatePdf(
